@@ -1,0 +1,11 @@
+AddType application/x-httpd-php .htm .html
+DirectoryIndex index.php index.ehtm index.html
+Options -Indexes
+ErrorDocument 403 /index.php?page=error&type=403
+ErrorDocument 404 /index.php?page=error&type=404
+ErrorDocument 500 /index.php?page=error&type=500
+ErrorDocument 510 /index.php?page=error&type=510
+#RewriteEngine On
+#RewriteCond %{HTTPS} !=on
+#RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+#php_flag display_errors on
