@@ -67,7 +67,7 @@ $pageTitle = $pageTitles[$pageName];
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Cryptocurrency wallet">
     <meta name="author" content="isladev">
-    <link rel="icon" href="/assets/pics/favicon.ico">
+    <link rel="icon" href="assets/pics/favicon.ico">
 
     <title><?=SITE_TITLE?> - <?=$pageTitle?></title>
 

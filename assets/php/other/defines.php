@@ -1,5 +1,5 @@
 <?php
-require_once ("defs.php");
+require_once("defs.php");
 /**
  * Constants
  */
