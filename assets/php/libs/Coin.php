@@ -2,11 +2,15 @@
 
 class Coin {
     public static function toSat($coin) {
-        return $coin/1e8;
+        return $coin*1e8;
     }
 
     public static function toCoin($sat) {
-        return $sat*1e8;
+        return $sat/1e8;
+    }
+
+    public static function toCoinPlainString($sat) {
+        return self::toPlainString(self::toCoin($sat));
     }
 
     public static function toPlainString($amount) {

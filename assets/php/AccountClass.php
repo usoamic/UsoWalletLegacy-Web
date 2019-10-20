@@ -44,7 +44,7 @@ class AccountClass {
             $item = $transactionHistory[$i];
             $type = $item['type'];
 
-            $amount = Coin::toPlainString($item['amount']);
+            $amount = Coin::toCoinPlainString($item['amount']);
             $isMoved = ($type == TX_MOVED);
 
             $address = "N/A";
@@ -63,7 +63,7 @@ class AccountClass {
             $item = array(
                 "type" => getTransactionType($type),
                 "date" => gdate($item['time']),
-                "amount" => ($type == TX_SENT) ? $amount : $amount*SWAP_FACTOR,
+                "amount" => abs(($type == TX_SENT) ? $amount : $amount*SWAP_FACTOR),
                 "address" => $address,
                 "status" => getTransactionStatus($item['status'])
             );
@@ -152,8 +152,8 @@ class AccountClass {
         $balance = (doubleval($received))*(doubleval(SWAP_FACTOR));
         $balance -= $this->getWithdrawn();
         return array(
-            'balance' => Coin::toPlainString($balance),
-            'exchanged' => Coin::toPlainString($received),
+            'balance' => Coin::toCoinPlainString($balance),
+            'exchanged' => Coin::toCoinPlainString($received),
             'supply' => SUPPLY
         );
     }
