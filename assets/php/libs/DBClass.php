@@ -10,6 +10,7 @@ class DBClass {
         $encryptor,
 
         $dbUser,
+        $dbName,
         $dbPassword,
         $dbHost,
         $dbEncryption;
@@ -17,8 +18,9 @@ class DBClass {
      * Public
      */
 
-    public function __construct($db_user = DB_USER, $db_password = DB_PASSWORD, $db_host = DB_HOST, $db_encryption = DB_ENCRYPTION) {
+    public function __construct($db_user = DB_USER, $db_name = DB_NAME, $db_password = DB_PASSWORD, $db_host = DB_HOST, $db_encryption = DB_ENCRYPTION) {
         $this->dbUser = $db_user;
+        $this->dbName = $db_name;
         $this->dbPassword = $db_password;
         $this->dbHost = $db_host;
         $this->dbEncryption = $db_encryption;
@@ -40,7 +42,7 @@ class DBClass {
 
     private function connect() {
         try {
-            $this->connection = new PDO('mysql:host='.$this->dbHost.';dbname='.$this->dbUser, $this->dbUser, $this->dbPassword);
+            $this->connection = new PDO('mysql:host='.$this->dbHost.';dbname='.$this->dbName, $this->dbUser, $this->dbPassword);
         } catch (PDOException $e) {
             $this->error(null, $e->getMessage());
         }
