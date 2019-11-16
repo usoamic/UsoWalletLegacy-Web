@@ -127,7 +127,6 @@ class AuthorizationClass
                 }
 
                 if(!$this->emailConfirmed($email)) {
-
                     return $this->failure(EMAIL_NOT_CONFIRMED);
                 }
                 $code = $this->encryptionClass->generateRandomHash($email);//
@@ -190,7 +189,7 @@ class AuthorizationClass
 
     private function emailConfirmed($email) {
         $confirmCode = $this->dbClass->getRow(USERS_TABLE, 'email', $email, "confirm_code");
-        return is_n(array_get_if_exist($confirmCode, 'confirm_code'));
+        return is_y(array_get_if_exist($confirmCode, 'confirm_code'));
     }
 
     private function emailExist($email) {
