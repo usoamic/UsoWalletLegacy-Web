@@ -51,10 +51,15 @@ class AccountClass {
             if($type != TX_SENT) {
                 $fromAddress = $item["from_address"];
                 $toAddress = $item["to_address"];
-                if (($isMoved && compare($userEmail, $fromAddress)) || ($type == TX_LEGACY_SENT)) {
-                    $address = $toAddress;
-                } else if (($isMoved && compare($userEmail, $toAddress)) || ($type == TX_RECEIVED)) {
-                    $address = $fromAddress;
+                if(compare($fromAddress, STAKING_ACCOUNT)) {
+                    $type = TX_MINED;
+                }
+                else {
+                    if (($isMoved && compare($userEmail, $fromAddress)) || ($type == TX_LEGACY_SENT)) {
+                        $address = $toAddress;
+                    } else if (($isMoved && compare($userEmail, $toAddress)) || ($type == TX_RECEIVED)) {
+                        $address = $fromAddress;
+                    }
                 }
             }
             else {

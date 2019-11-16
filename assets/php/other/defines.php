@@ -9,6 +9,7 @@ const SITE_TITLE = _SITE_TITLE;
 const FORMAT_OF_DATE = _FORMAT_OF_DATE;
 const TOKEN_TICKER = _TOKEN_TICKER;
 const SUPPLY = _SUPPLY;
+const STAKING_ACCOUNT = _STAKING_ACCOUNT;
 
 /**
  * Telegram params
