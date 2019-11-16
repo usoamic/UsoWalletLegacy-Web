@@ -32,7 +32,7 @@ if(isset_post('reset_password_request')) {
             <form method="post">
                 <?php (require_once ("authorization_pages/".$pageName.".php")); ?>
                 <div class="form-actions">
-                    <button id="commonBtn" class="btn btn-block btn-primary"><?=$pageTitle?></button>
+                    <button id="commonBtn" class="btn btn-block btn-primary<?=(ENABLE_CAPTCHA ? " recaptcha" : "")?>"><?=$pageTitle?></button>
                 </div>
             </form>
         </div>
