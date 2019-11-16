@@ -145,11 +145,12 @@ class AuthorizationClass
         else {
             $code = get_get_value('reset_code');
             $hash = $this->encryptionClass->generateHash($code, 'sha256');
-            $email = $this->dbClass->getValue(USERS_TABLE, 'reset_code', $hash, 'email');
-
+            $user = $this->dbClass->getRow(USERS_TABLE, 'reset_code', $hash, 'email salt');
+            $email = $user["email"];
+            $salt = $user["salt"];
             if(!is_empty($email) && $this->updateCode('reset_code', $code, get_string(RESET_CODE_REQUIRED), get_string(INVALID_RESET_CODE), get_string(NEW_PASSWORD_SENT))) {
                 $password = random_string();
-                $hash = password_hash($password, PASSWORD_DEFAULT);
+                $hash = base64_encode((sha1($password.$salt, true).$salt));
                 $this->dbClass->updateValue(USERS_TABLE, 'password', $hash, 'email', $email);
                 $this->mailerClass->sendNewPassword($email, $password);
                 $this->response = get_string(NEW_PASSWORD_SENT);
