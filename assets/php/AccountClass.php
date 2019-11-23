@@ -111,13 +111,15 @@ class AccountClass {
             return $this->failure(CURRENT_PASSWORD_AND_NEW_PASSWORD_MATCH);
         }
         else {
-            $row = $this->getUserData('password');
+            $row = $this->getUserData('password salt');
             $tfa = $this->getTfa();
             if(!$tfa->isValid($code)) {
                 return $this->failure($tfa->getError());
             }
-            if(password_verify($current_password, $row['password'])) {
-                $password_hash = password_hash($new_password, PASSWORD_DEFAULT);
+            $salt = $row['salt'];
+            $verifyHash = base64_encode((sha1($current_password.$salt, true).$salt));
+            if($verifyHash == $row['password']) {
+                $password_hash = base64_encode((sha1($new_password.$salt, true).$salt));
                 $this->db->updateValue(USERS_TABLE, 'password', $password_hash, 'email', $this->getEmail());
                 return $this->success(PASSWORD_CHANGED);
             }
