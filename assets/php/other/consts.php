@@ -45,6 +45,7 @@ const INVALID_CAPTCHA = 42;
 const AMOUNT_MUST_BE_GREATER_THAN = 45;
 const NA = 46;
 const CURRENT_PASSWORD_AND_NEW_PASSWORD_MATCH = 47;
+const INVALID_TX_TYPE = 48;
 
 /**
  * Transaction status
@@ -63,6 +64,7 @@ const TX_MINED = 4;
 const TX_RECEIVED = 5;
 const TX_UNKNOWN = 6;
 const TX_SENT = 7;
+const TX_SENT_ETH = 8;
 
 function get_string($number)
 {
@@ -191,6 +193,9 @@ function get_string($number)
         case CURRENT_PASSWORD_AND_NEW_PASSWORD_MATCH:
             $str = "Current password and new password match";
             break;
+        case INVALID_TX_TYPE:
+            $str = "Invalid transaction type";
+            break;
         default:
             $str = 'Unknown error';
             break;
@@ -228,6 +233,9 @@ function getTransactionType($number)
             break;
         case TX_SENT:
             $str = "Sent (token)";
+            break;
+        case TX_SENT_ETH:
+            $str = "Sent (ETH)";
             break;
         case TX_MOVED:
             $str = "Moved";

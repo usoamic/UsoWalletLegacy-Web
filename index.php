@@ -1,5 +1,5 @@
 <?php
-require_once("assets/php/other/defines.php");
+require_once("defines.php");
 require_once("assets/php/other/consts.php");
 require_once("assets/php/libs/cfunctions.php");
 require_once("assets/php/libs/Coin.php");
@@ -66,7 +66,7 @@ $pageTitle = $pageTitles[$pageName];
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Cryptocurrency wallet">
-    <meta name="author" content="isladev">
+    <meta name="author" content="primys">
     <link rel="icon" href="assets/pics/favicon.ico">
 
     <title><?=SITE_TITLE?> - <?=$pageTitle?></title>
@@ -78,6 +78,12 @@ $pageTitle = $pageTitles[$pageName];
     <link href="assets/css/theme.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
+
+<main role="main" class="container">
+    <div class="alert alert-danger container" role="alert">
+        <?= CLOSING_WARNING ?>
+    </div>
+</main>
 
 <?php (require_once ($basePage.".php")); ?>
 <!-- Bootstrap core JavaScript

@@ -1,6 +1,6 @@
 <div class="row">
     <?php foreach ($summaryData as $key => $value) { ?>
-        <div class="col-md-4 my-3">
+        <div class="col-md-3 my-3">
             <div class="card">
                 <div class="card-body text-center shadow-sm">
                     <p><?= ucfirst($key) ?></p>
