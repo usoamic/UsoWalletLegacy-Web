@@ -48,7 +48,10 @@ class AccountClass {
             $isMoved = ($type == TX_MOVED);
 
             $address = "N/A";
-            if($type != TX_SENT) {
+
+            $isUsoSent = in_array($type, array(TX_SENT, TX_SENT_ETH));
+
+            if (!$isUsoSent) {
                 $fromAddress = $item["from_address"];
                 $toAddress = $item["to_address"];
                 if(compare($fromAddress, STAKING_ACCOUNT)) {
@@ -65,10 +68,11 @@ class AccountClass {
             else {
                 $address = $item["address"];
             }
+
             $item = array(
                 "type" => getTransactionType($type),
                 "date" => gdate($item['time']),
-                "amount" => abs(($type == TX_SENT) ? $amount : $amount*SWAP_FACTOR),
+                "amount" => abs(($isUsoSent) ? $amount : $amount*SWAP_FACTOR),
                 "address" => $address,
                 "status" => getTransactionStatus($item['status'])
             );
@@ -161,6 +165,7 @@ class AccountClass {
         return array(
             'balance' => Coin::toCoinPlainString($balance),
             'exchanged' => Coin::toCoinPlainString($received),
+            'price' => EXCHANGE_PRICE." ETH",
             'supply' => SUPPLY
         );
     }
@@ -188,7 +193,8 @@ class AccountClass {
         $amount = get_post_value('amount');
         $address = get_post_value('address');
         $code = get_post_value('authenticator_code');
-
+        $buttonSend = isset_post('btn_send');
+        $buttonExchange = isset_post('btn_exchange');
 
         if(is_empty($address)) {
             return $this->failure(ADDRESS_REQUIRED);
@@ -199,6 +205,7 @@ class AccountClass {
         else if(!$tfa->isValid($code)) {
             return $this->failure($tfa->getError());
         }
+
         if(!ENABLED_WITHDRAW) {
             return $this->failure(SENDING_DISABLED);
         }
@@ -215,13 +222,24 @@ class AccountClass {
             return $this->failure(INSUFFICIENT_FUNDS);
         }
 
-        $this->sendToAddress($amount, $address);
+        if ($buttonSend) {
+            $type = TX_SENT;
+        }
+        else if ($buttonExchange) {
+            $type = TX_SENT_ETH;
+        }
+        else {
+            return $this->failure(INVALID_TX_TYPE);
+        }
+
+        $this->sendToAddress($type, $amount, $address);
+
         return $this->success(TOKENS_SENT);
     }
 
-    public function sendToAddress($amount, $address) {
+    public function sendToAddress($type, $amount, $address) {
         $sendParams = array(
-            'type' => TX_SENT,
+            'type' => $type,
             'amount' => $amount,
             'address' => $address,
             'email' => $this->getEmail(),
