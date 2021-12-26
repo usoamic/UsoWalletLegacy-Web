@@ -1,5 +1,5 @@
 <?php
-require_once("assets/php/other/defines.php");
+require_once("defines.php");
 require_once("assets/php/other/consts.php");
 require_once("assets/php/libs/cfunctions.php");
 require_once("assets/php/libs/Coin.php");
